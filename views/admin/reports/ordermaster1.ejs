@@ -1,0 +1,42 @@
+<html>
+    <body>
+
+        <center><h1>Order Details Reports</h1></center>
+        <hr/>
+        <a href="" onclick="window.print();">Print</a>
+        
+        <table id="example1" border='1' align="center" class="table table-bordered table-striped">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Qty</th>
+      <th>Price</th>
+      <th>Total</th>
+      
+    </tr>
+    </thead>
+    <tbody>
+        <% mysum = 0 %>
+      <% if(my_array.length >0 ) { %>
+        <% for(var i=0; i<my_array.length;i++) { %>
+            <tr>
+                <td><%= i+1 %></td> 
+                <td><%= my_array[i].p_name %></td>
+                <td><%= my_array[i].p_qty %></td>
+                <td><%= my_array[i].p_price %></td>
+                <td><%= my_array[i].p_price *  my_array[i].p_qty %></td>
+            </tr>
+                 <% mysum +=  my_array[i].p_price *  my_array[i].p_qty  %>
+          <% } %>
+          <% } 
+          else { 
+             %>
+            No Record Found
+          <% } %>
+          <td></td><td></td>
+          <td colspan="3"> Sum is <%= mysum %> </td>
+    </tbody>
+  </table>
+</body>
+</html>

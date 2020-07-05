@@ -1,0 +1,48 @@
+<html>
+    <body>
+
+        <center><h1>Product Reports</h1></center>
+        <hr/>
+        <a href="" onclick="window.print();">Print</a>
+
+ 
+    
+        <table id="example1" border='1' align="center" class="table table-bordered table-striped">
+            <thead>
+            <tr>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Details</th>
+              <th>SubCategory</th>
+              <th>Price</th>
+              <th>Image</th>
+              
+            </tr>
+            </thead>
+            <tbody>
+              <% if(my_array.length >0 ) { %>
+                <% for(var i=0; i<my_array.length;i++) { %>
+                  <tr>
+                      <td><%= i+1 %></td> 
+                      <td><%= my_array[i].p_name %></td>
+                      <td><%= my_array[i].p_details %></td>
+                      <td><%= my_array[i]._subcategory.sub_category_name %> </td>
+                      <td><%= my_array[i].p_price %></td>
+                      <td><img src='/upload/<%= my_array[i].p_image %>' style='width:50px;'>
+                        
+                      </td>
+                     
+                  </tr>
+                  <% } %>
+                  <% } else { %>
+                    No Record Found
+                  <% } %>
+              
+            
+             
+            
+            </tbody>
+            
+          </table>
+    </body>
+</html>
