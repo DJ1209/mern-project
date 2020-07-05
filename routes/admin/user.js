@@ -1,8 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-
-var LocationModel = require('../../model/location_table');
+ 
 var UserModel = require('../../model/user_table');
 
 
@@ -23,18 +22,9 @@ router.get('/', function(req, res, next) {
 
 
 router.get('/add', function(req, res, next) {
-    LocationModel.find(function(err, db_sub_category_array) {
-      if (err) {
-          console.log("Error in Fetch Data " + err);
-          res.send("Error in Fetch Data " + err);
-        } else {
-          //Print Data in Console
-          console.log(db_sub_category_array);
-          //Render User Array in HTML Table
-          res.render('admin/user/add', { location_array : db_sub_category_array });
-          
-        }
-    });
+  
+          res.render('admin/user/add');
+  
 });
 
 //Add Form Processing using Post Method 
@@ -47,8 +37,7 @@ router.post('/add', function(req, res, next) {
     user_mobile: req.body.txt3,
     user_email: req.body.txt4,
     user_password: req.body.txt5,
-    user_address: req.body.txt6,
-    _location:req.body.txt7
+    user_address: req.body.txt6
 }
 var data = UserModel(mybodydata);
 data.save(function(err) {

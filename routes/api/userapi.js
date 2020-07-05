@@ -7,15 +7,10 @@ var router = express.Router();
 var UserModel = require('../../model/user_table');
 var CategoryModel = require('../../model/category_table');
 var SubCategoryModel = require('../../model/sub_category_table');
-var LocationModel = require('../../model/location_table');
 var ProductModel = require('../../model/product_table');
-var ProductSizeModel = require('../../model/product_size_table');
 var CartModel = require('../../model/cart_table');
-var FaqModel = require('../../model/faq_table');
-var FeedbackModel = require('../../model/feedback_table');
 var OrderMasterModel = require('../../model/order_master_table');
 var OrderDetailsModel = require('../../model/order_detail_table');
-var ContactModel = require('../../model/contact_table');
 
 router.get('/', function(req, res, next) {
   res.render('api/home');
@@ -59,19 +54,6 @@ router.get('/get-sub-category-api/:id', function(req, res, next) {
   });
 });
 
-router.get('/get-locations-list', function(req, res, next) {
-  LocationModel.find(function(err, db_users_array) {
-    if (err) {
-        console.log("Error in Fetch Data " + err);
-      } else {
-        //Print Data in Console
-        console.log(db_users_array);
-        //Render User Array in HTML Table
-        res.status(200).send(JSON.stringify({"flag": 1, "message": "Data Fetch", "data": db_users_array}));
-      }
-  });
-});
-
 
 
 
@@ -89,12 +71,7 @@ router.get('/get-product-api/:id', function(req, res, next) {
   });
 });
 
-router.get('/get-product-photo-api/:id', function(req, res, next) {
-  ProductSizeModel.find({_product:req.params.id},function(err, db_product_array){
-    console.log(db_product_array);
-        res.status(200).send(JSON.stringify({"flag": 1, "message": "Data Fetch", "data": db_product_array}));
-  });
-});
+
 
 
 
@@ -382,55 +359,7 @@ router.post('/confirm-order-api', function(req, res, next) {
 });
 
 
-router.get('/get-faq-list', function(req, res, next) {
-    FaqModel.find(function(err, db_users_array) {
-      if (err) {
-          console.log("Error in Fetch Data " + err);
-        } else {
-          //Print Data in Console
-          console.log(db_users_array);
-          //Render User Array in HTML Table
-          res.status(200).send(JSON.stringify({"flag": 1, "message": "Data Fetch", "data": db_users_array}));
-        }
-    });
-  });
 
-
-  router.get('/get-product-feedback-api/:id', function(req, res, next) {
-    FeedbackModel.find({product_id:req.params.id},function(err, db_users_array){
-      if (err) {
-          console.log("Error in Fetch Data " + err);
-        } else {
-          //Print Data in Console
-          console.log(db_users_array);
-          //Render User Array in HTML Table
-          res.status(200).send(JSON.stringify({"flag": 1, "message": "Data Fetch", "data": db_users_array}));
-        }
-    });
-  });
-
-  router.post('/add-feedback-api', function(req, res, next) {
-    console.log("Cart Data From UserSide"+req.body);
-    //Create an Array 
-    const mybodydata = {
-      feedback_name: req.body.feedback_name,
-      feedback_msg: req.body.feedback_msg,
-      feedback_date : req.body.feedback_date,
-      feedback_rating: req.body.user_rating,
-      user_id: req.body.user_id,
-      product_id: req.body.product_id
-  }
-  var data = FeedbackModel(mybodydata);
-  data.save(function(err) {
-      if (err) {
-        res.send(JSON.stringify({"status": 500,"flag": 0, "message": "Data Error" , "data":err}));
-        console.log("Error in Insert Record");
-      } else {
-         console.log("Record Added");
-         res.send(JSON.stringify({"status": 200,"flag": 1, "message": "Record Added", "data": ''}));
-      }
-  })
-  });
 
 
   router.post('/change-password-api', function(req, res, next) {
@@ -451,25 +380,4 @@ router.get('/get-faq-list', function(req, res, next) {
   })
   });
   
-  //Add Form Processing using Post Method 
-router.post('/contact-api', function(req, res, next) {
-  console.log(req.body);
-  //Create an Array 
-  const mybodydata = {
-    user_name: req.body.user_name,
-    user_email: req.body.user_email,
-    user_contact: req.body.user_contact,
-    user_msg: req.body.user_msg
-}
-var data = ContactModel(mybodydata);
-data.save(function(err) {
-    if (err) {
-      res.send(JSON.stringify({"status": 500,"flag": 0, "message": "Data Error" , "data":err}));
-      console.log("Error in Insert Record");
-    } else {
-       console.log("Record Added");
-       res.send(JSON.stringify({"status": 200,"flag": 1, "message": "Record Added", "data": ''}));
-    }
-})
-});
 module.exports = router;
